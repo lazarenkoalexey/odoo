@@ -21,6 +21,7 @@ categories:
 settings:
   fields:
     - type: dockertags      
+      caption: Odoo version
       image: odoo
       name: tag
       hidden: false
