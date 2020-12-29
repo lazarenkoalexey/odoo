@@ -18,28 +18,12 @@ categories:
   - apps/popular
   - apps/content-management
 
-onBeforeInit: |
-  var url = "https://registry.hub.docker.com/v1/repositories/odoo/tags";
-  var tags = toNative(new com.hivext.api.core.utils.Transport().get(url)).sort();
-  var ver = {},
-      def = 13;
-  for (var i = 0; i < tags.length; i++) {
-      ver[tags[i].name] = tags[i].name;
-      if (!isNaN(tags[i].name) && tags[i].name > def) def = tags[i].name;
-  }
-  
-  return {
-    result:0, 
-    settings: {
-      fields: [{
-          name: "version",
-          caption: "Oddo Version",
-          type: "list",
-          values: ver,
-          "default": def
-      }]    
-    }
-  };
+settings:
+  fields:
+    - type: dockertags      
+      image: odoo
+      name: tag
+      hidden: false
 
 description: 
   text: Odoo is an all-in-one business management software to run a company (ERP, CMS, CRM application, e-Commerce backend, etc). 
@@ -54,7 +38,7 @@ nodes:
   displayName: Balancer
   cloudlets: 16
   nodeGroup: bl
-- image: odoo:${settings.version}
+- image: odoo:${settings.tag}
   displayName: App Server
   cloudlets: 16
   nodeGroup: cp
